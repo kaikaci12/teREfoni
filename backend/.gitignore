@@ -1,0 +1,50 @@
+# Node.js modules and dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.*  # like .env.development, .env.production
+
+# Build output
+dist/
+build/
+
+# Temp files
+tmp/
+temp/
+.cache/
+coverage/
+
+# Secrets
+secrets/
+*secret*
+*.pem
+*.key
+*.crt
+
+# VS Code
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Misc
+*.swp
+*.swo
