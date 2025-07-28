@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/sign_in_form.dart';
-import 'package:frontend/widgets/sign_up_form.dart';
-import 'package:frontend/widgets/social_login.dart';
+import 'package:frontend/widgets/auth/sign_in_form.dart';
+import 'package:frontend/widgets/auth/sign_up_form.dart';
+import 'package:frontend/widgets/auth/social_login.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
