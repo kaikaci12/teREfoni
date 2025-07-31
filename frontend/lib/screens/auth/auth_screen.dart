@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:frontend/l10n/app_localizations.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/widgets/auth/sign_in_form.dart';
 import 'package:frontend/widgets/auth/sign_up_form.dart';
 import 'package:frontend/widgets/auth/social_login.dart';
+import 'package:frontend/utils/constants/localization/locales.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -12,10 +16,10 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool _isSignUp = true;
-  String _selectedLang = 'ge';
+  String _selectedLang = "ka";
 
   final List<Map<String, String>> _languageOptions = [
-    {'code': 'ge', 'label': 'GE', 'flagUrl': 'https://flagcdn.com/w40/ge.png'},
+    {'code': "ka", 'label': "GE", 'flagUrl': 'https://flagcdn.com/w40/ge.png'},
     {'code': 'en', 'label': 'EN', 'flagUrl': 'https://flagcdn.com/w40/us.png'},
   ];
 
@@ -26,77 +30,72 @@ class _AuthScreenState extends State<AuthScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: isDesktop ? 500 : size.width * 0.95,
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isDesktop ? 32.0 : 16.0,
-              vertical: 24.0,
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: isDesktop ? 500 : size.width * 0.95,
             ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final isScrollable = constraints.maxHeight < 700;
-
-                return Column(
-                  children: [
-                    // Language Selector (Top-right)
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: _selectedLang,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedLang = value!;
-                            });
-                            // Optional: change app language here
-                          },
-                          items: _languageOptions.map((lang) {
-                            return DropdownMenuItem<String>(
-                              value: lang['code'],
-                              child: Row(
-                                children: [
-                                  Image.network(
-                                    lang['flagUrl']!,
-                                    width: 24,
-                                    height: 16,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            const Icon(Icons.flag, size: 24),
-                                  ),
-                                  const SizedBox(width: 8.0),
-                                  Text(lang['label']!),
-                                ],
-                              ),
-                            );
-                          }).toList(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: isDesktop ? 32.0 : 16.0,
+                vertical: 16.0,
+              ),
+              child: Column(
+                children: [
+                  // Language Selector (Top-right)
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _selectedLang,
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        style: const TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedLang = value!;
+                            Locale newLocale = Locale(value);
+                            MyApp.setLocale(context, newLocale);
+                          });
+                          // Optional: change app language here
+                        },
+                        items: _languageOptions.map((lang) {
+                          return DropdownMenuItem<String>(
+                            value: lang['code'],
+                            child: Row(
+                              children: [
+                                Image.network(
+                                  lang['flagUrl']!,
+                                  width: 24,
+                                  height: 16,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      const Icon(Icons.flag, size: 24),
+                                ),
+                                const SizedBox(width: 8.0),
+                                Text(lang['label']!),
+                              ],
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ),
+                  ),
 
-                    const SizedBox(height: 24.0),
+                  const SizedBox(height: 16.0),
 
-                    // Main Scrollable Content
-                    Expanded(
-                      child: isScrollable
-                          ? SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: _buildMainContent(),
-                            )
-                          : _buildMainContent(),
+                  // Main Scrollable Content
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: _buildMainContent(),
                     ),
-                  ],
-                );
-              },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -128,7 +127,7 @@ class _AuthScreenState extends State<AuthScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'ტე',
+                  "ტე",
                   style: TextStyle(
                     fontSize: 36.0,
                     fontWeight: FontWeight.bold,
@@ -177,7 +176,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Text(
-                      'Log in',
+                      AppLocalizations.of(context)!.login,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -198,7 +197,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Text(
-                      'Sign up',
+                      AppLocalizations.of(context)!.signup,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -224,7 +223,7 @@ class _AuthScreenState extends State<AuthScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
-                'Or Continue with',
+                AppLocalizations.of(context)!.continueWith,
                 style: TextStyle(color: Colors.grey[600]),
               ),
             ),
@@ -239,7 +238,7 @@ class _AuthScreenState extends State<AuthScreen> {
           children: [
             SocialLoginButton(
               icon: Image.asset(
-                'images/fb.png',
+                'assets/images/fb.png',
                 width: 32,
                 errorBuilder: (context, error, stackTrace) => const Icon(
                   Icons.facebook,
@@ -253,7 +252,7 @@ class _AuthScreenState extends State<AuthScreen> {
             const SizedBox(width: 24.0),
             SocialLoginButton(
               icon: Image.asset(
-                'images/google.png',
+                'assets/images/google.png',
                 width: 32,
                 errorBuilder: (context, error, stackTrace) => const Icon(
                   Icons.g_mobiledata,

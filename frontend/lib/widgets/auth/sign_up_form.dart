@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/l10n/app_localizations.dart';
+import 'package:frontend/utils/validator/validation.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -17,7 +19,6 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _idNumberController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
 
-  bool _rememberMe = false;
   bool _isPasswordVisible = false;
 
   @override
@@ -31,65 +32,55 @@ class _SignUpFormState extends State<SignUpForm> {
     super.dispose();
   }
 
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) return 'Email is required';
-    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
-    return null;
-  }
-
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) return 'Password is required';
-    if (value.length < 6) return 'Password must be at least 6 characters';
-    return null;
-  }
-
   String? validateGeorgianPhone(String? value) {
-    if (value == null || value.isEmpty) return 'Phone number is required';
+    final t = AppLocalizations.of(context)!;
+    if (value == null || value.isEmpty) return t.phoneRequired;
     final phoneRegex = RegExp(r'^\+9955\d{8}$');
     if (!phoneRegex.hasMatch(value)) {
-      return 'Enter a valid Georgian number (e.g. +9955XXXXXXXX)';
+      return t.georgianPhoneValidation;
     }
     return null;
   }
 
   String? validateID(String? value) {
-    if (value == null || value.isEmpty) return 'ID Number is required';
-    if (value.length != 11) return 'ID Number must be exactly 11 digits';
+    final t = AppLocalizations.of(context)!;
+    if (value == null || value.isEmpty) return t.idRequired;
+    if (value.length != 11) return t.idInvalid;
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildLabel('Name'),
+          buildLabel(t.name),
           TextFormField(
             controller: _nameController,
-            decoration: const InputDecoration(hintText: 'John'),
-            validator: (value) => value!.isEmpty ? 'Name is required' : null,
+            decoration: InputDecoration(hintText: t.nameHint),
+            validator: (value) => TValidator.validateName(context, value),
           ),
           const SizedBox(height: 16),
-          buildLabel('Surname'),
+          buildLabel(t.surname),
           TextFormField(
             controller: _surnameController,
-            decoration: const InputDecoration(hintText: 'Doe'),
-            validator: (value) => value!.isEmpty ? 'Surname is required' : null,
+            decoration: InputDecoration(hintText: t.surnameHint),
+            validator: (value) => TValidator.validatSurname(context, value),
           ),
           const SizedBox(height: 16),
-          buildLabel('ID Number'),
+          buildLabel(t.idNumber),
           TextFormField(
             controller: _idNumberController,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(hintText: '12345678901'),
+            decoration: InputDecoration(hintText: t.idNumberHint),
             validator: validateID,
           ),
           const SizedBox(height: 16),
-          buildLabel('Phone Number'),
-
+          buildLabel(t.phoneNumber),
           Row(
             children: [
               Row(
@@ -110,27 +101,27 @@ class _SignUpFormState extends State<SignUpForm> {
                 child: TextFormField(
                   controller: _phoneNumberController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(hintText: '5XXXXXXXX'),
+                  decoration: InputDecoration(hintText: t.phoneNumberHint),
                   validator: validateGeorgianPhone,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 24),
-          buildLabel('Email address'),
+          buildLabel(t.email),
           TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(hintText: 'johndoe@example.com'),
-            validator: validateEmail,
+            decoration: InputDecoration(hintText: t.emailHint),
+            validator: (value) => TValidator.validateEmail(context, value),
           ),
           const SizedBox(height: 24),
-          buildLabel('Password'),
+          buildLabel(t.password),
           TextFormField(
             controller: _passwordController,
             obscureText: !_isPasswordVisible,
             decoration: InputDecoration(
-              hintText: 'Your password',
+              hintText: t.passwordHint,
               suffixIcon: IconButton(
                 icon: Icon(
                   _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -143,42 +134,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 },
               ),
             ),
-            validator: validatePassword,
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Checkbox(
-                    value: _rememberMe,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        _rememberMe = newValue!;
-                      });
-                    },
-                    activeColor: Colors.teal,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                  ),
-                  const Text('Remember me'),
-                ],
-              ),
-              TextButton(
-                onPressed: () {
-                  // Forgot password logic
-                },
-                child: const Text(
-                  'Forgot your password?',
-                  style: TextStyle(
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
+            validator: (value) => TValidator.validatePassword(context, value),
           ),
           const SizedBox(height: 32),
           SizedBox(
@@ -193,10 +149,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   print('Phone: ${_phoneNumberController.text}');
                   print('Email: ${_emailController.text}');
                   print('Password: ${_passwordController.text}');
-                  print('Remember Me: $_rememberMe');
                 }
               },
-              child: const Text('Next'),
+              child: Text(t.next),
             ),
           ),
         ],

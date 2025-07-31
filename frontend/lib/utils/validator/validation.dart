@@ -1,6 +1,8 @@
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-
+import "package:flutter/material.dart";
 import '../constants/text_strings.dart';
+import 'package:flutter/material.dart';
 
 /// VALIDATION CLASS
 class TValidator {
@@ -57,9 +59,10 @@ class TValidator {
   }
 
   /// Username Validation
-  static String? validateUsername(String? username) {
+  static String? validateName(BuildContext context, String? username) {
+    final t = AppLocalizations.of(context)!;
     if (username == null || username.isEmpty) {
-      return 'Username is required.';
+      return t.nameRequired;
     }
 
     // Define a regular expression pattern for the username.
@@ -77,56 +80,73 @@ class TValidator {
           !username.startsWith('_') &&
           !username.startsWith('-') &&
           !username.endsWith('_') &&
-          !username.endsWith('-');
+          !username.endsWith('-') &&
+          username.length > 2;
     }
 
     if (!isValid) {
-      return 'Username is not valid.';
+      return t.nameTooShort;
+    }
+
+    return null;
+  }
+
+  static String? validatSurname(BuildContext context, String? username) {
+    final t = AppLocalizations.of(context)!;
+    if (username == null || username.isEmpty) {
+      return t.surnameRequired;
+    }
+
+    // Define a regular expression pattern for the username.
+    const pattern = r"^[a-zA-Z0-9_-]{3,20}$";
+
+    // Create a RegExp instance from the pattern.
+    final regex = RegExp(pattern);
+
+    // Use the hasMatch method to check if the username matches the pattern.
+    bool isValid = regex.hasMatch(username);
+
+    // Check if the username doesn't start or end with an underscore or hyphen.
+    if (isValid) {
+      isValid =
+          !username.startsWith('_') &&
+          !username.startsWith('-') &&
+          !username.endsWith('_') &&
+          !username.endsWith('-') &&
+          username.length > 2;
+    }
+
+    if (!isValid) {
+      return t.surnameTooShort;
     }
 
     return null;
   }
 
   /// Email Validation
-  static String? validateEmail(String? value) {
+  static String? validateEmail(BuildContext context, String? value) {
+    final t = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Email is required.';
+      return t.emailRequired;
     }
 
-    // Regular expression for email validation
     final emailRegExp = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
-
     if (!emailRegExp.hasMatch(value)) {
-      return 'Invalid email address.';
+      return t.invalidEmail;
     }
 
     return null;
   }
 
-  /// Password Validation
-  static String? validatePassword(String? value) {
+  static String? validatePassword(BuildContext context, String? value) {
+    final t = AppLocalizations.of(context)!;
+
     if (value == null || value.isEmpty) {
-      return 'Password is required.';
+      return t.passwordRequired;
     }
 
-    // Check for minimum password length
     if (value.length < 6) {
-      return 'Password must be at least 6 characters long.';
-    }
-
-    // Check for uppercase letters
-    if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter.';
-    }
-
-    // Check for numbers
-    if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number.';
-    }
-
-    // Check for special characters
-    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character.';
+      return t.passwordTooShort;
     }
 
     return null;
