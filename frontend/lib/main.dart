@@ -4,8 +4,10 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/screens/auth/auth_screen.dart';
 import 'package:frontend/screens/home_screen.dart';
+import 'package:frontend/utils/providers/auth_provider.dart';
 // auto-generated
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 final _router = GoRouter(
   routes: [
@@ -40,19 +42,22 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      locale: _locale,
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      routerConfig: _router,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: const [Locale('en'), Locale('ka')],
-      theme: ThemeData(primarySwatch: Colors.teal, fontFamily: 'Inter'),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => AuthProvider())],
+      child: MaterialApp.router(
+        locale: _locale,
+        debugShowCheckedModeBanner: false,
+        title: 'TEREFONI',
+        routerConfig: _router,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('en'), Locale('ka')],
+        theme: ThemeData(primarySwatch: Colors.teal, fontFamily: 'Inter'),
+      ),
     );
   }
 }

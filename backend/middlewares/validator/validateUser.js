@@ -1,19 +1,22 @@
-export function validateUser(req, res, next) {
-    const { name, surname,  phone_number, email, password } = req.body;
+import bcrypt  from "bcrypt"
+
+export function validateUserRegister(req, res, next) {
+    const { first_name, last_name,  phone_number, email, password } = req.body;
   
-    if (!name || name.trim().length < 2) {
+    if (!first_name || first_name.trim().length < 2) {
       return res.status(400).json({ message: "Name is required and must be at least 2 characters." });
     }
   
-    if (!surname || surname.trim().length < 2) {
-      return res.status(400).json({ message: "Surname is required and must be at least 2 characters." });
+    if (!last_name || last_name.trim().length < 2) {
+      return res.status(400).json({ message: "last_name is required and must be at least 2 characters." });
     }
   
-    if (!id_number || !/^\d{11}$/.test(id_number)) {
-      return res.status(400).json({ message: "ID number must be exactly 11 digits." });
-    }
+    // if (!id_number || !/^\d{11}$/.test(id_number)) {
+    //   return res.status(400).json({ message: "ID number must be exactly 11 digits." });
+    // }
   
-    if (!phone_number || !/^\+?\d{9,15}$/.test(phone_number)) {
+    if (!phone_number || !/^5\d{8}$/.test(phone_number)
+    ) {
       return res.status(400).json({ message: "Phone number is invalid." });
     }
   
@@ -27,4 +30,11 @@ export function validateUser(req, res, next) {
   
     next(); // ✅ Validation passed, continue to controller
   }
-  
+ export function validateUserLogin(req,res,next){
+  const {email,password} = req.body
+  if(!email || !password){
+    return res.status(400).json({ message: "Credentials not provided" });
+  }
+ next()
+
+ } 

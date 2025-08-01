@@ -172,6 +172,18 @@ class AppLocalizationsKa extends AppLocalizations {
   String get idInvalid => 'პირადი ნომერი უნდა იყოს ზუსტად 11 ციფრი';
 
   @override
+  String get emailRequired => 'ელფოსტის შეყვანა სავალდებულოა.';
+
+  @override
+  String get invalidEmail => 'გთხოვთ, შეიყვანეთ სწორი ელფოსტის მისამართი.';
+
+  @override
+  String get passwordRequired => 'პაროლის შეყვანა სავალდებულოა.';
+
+  @override
+  String get passwordTooShort => 'პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს.';
+
+  @override
   String get nameRequired => 'სახელის მითითება სავალდებულოა.';
 
   @override
@@ -184,14 +196,11 @@ class AppLocalizationsKa extends AppLocalizations {
   String get surnameTooShort => 'გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.';
 
   @override
-  String get emailRequired => 'ელფოსტის შეყვანა სავალდებულოა.';
+  String get registrationSuccess => 'თქვენ წარმატებით გაიარეთ რეგისტრაცია';
 
   @override
-  String get invalidEmail => 'გთხოვთ, შეიყვანეთ სწორი ელფოსტის მისამართი.';
+  String get userNotFound => 'მომხმარებელი ვერ მოიძებნა';
 
   @override
-  String get passwordRequired => 'პაროლის შეყვანა სავალდებულოა.';
-
-  @override
-  String get passwordTooShort => 'პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს.';
+  String get incorrectPassword => 'არასწორი პაროლი';
 }

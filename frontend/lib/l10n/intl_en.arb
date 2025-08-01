@@ -56,14 +56,18 @@
   "phoneRequired": "Phone number is required",
   "idRequired": "ID Number is required",
   "idInvalid": "ID Number must be exactly 11 digits",
-"nameRequired": "სახელის მითითება სავალდებულოა.",
-"nameTooShort": "სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.",
-"surnameRequired": "გვარის მითითება სავალდებულოა.",
-"surnameTooShort": "გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.",
+
 "emailRequired": "Email is required.",
   "invalidEmail": "Please enter a valid email address.",
   "passwordRequired": "Password is required.",
-  "passwordTooShort": "Password must be at least 6 characters."
+  "passwordTooShort": "Password must be at least 6 characters.",
+"nameRequired": "Name is required.",
+"nameTooShort": "Name must be at least 2 characters.",
+"surnameRequired": "Surname is required.",
+"surnameTooShort": "Surname must be at least 2 characters.",
+"registrationSuccess": "Registration successful!",
+"userNotFound":"User not found",
+"incorrectPassword":"Incorrect Password"
 
   }
   

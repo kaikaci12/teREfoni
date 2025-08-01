@@ -172,18 +172,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get idInvalid => 'ID Number must be exactly 11 digits';
 
   @override
-  String get nameRequired => 'სახელის მითითება სავალდებულოა.';
-
-  @override
-  String get nameTooShort => 'სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.';
-
-  @override
-  String get surnameRequired => 'გვარის მითითება სავალდებულოა.';
-
-  @override
-  String get surnameTooShort => 'გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.';
-
-  @override
   String get emailRequired => 'Email is required.';
 
   @override
@@ -194,4 +182,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passwordTooShort => 'Password must be at least 6 characters.';
+
+  @override
+  String get nameRequired => 'Name is required.';
+
+  @override
+  String get nameTooShort => 'Name must be at least 2 characters.';
+
+  @override
+  String get surnameRequired => 'Surname is required.';
+
+  @override
+  String get surnameTooShort => 'Surname must be at least 2 characters.';
+
+  @override
+  String get registrationSuccess => 'Registration successful!';
+
+  @override
+  String get userNotFound => 'User not found';
+
+  @override
+  String get incorrectPassword => 'Incorrect Password';
 }

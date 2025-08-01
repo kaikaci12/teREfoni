@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/l10n/app_localizations.dart';
+import 'package:frontend/screens/home_screen.dart';
+import 'package:frontend/utils/http/auth/register_user.dart';
+import 'package:frontend/utils/providers/auth_provider.dart';
 import 'package:frontend/utils/validator/validation.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -16,10 +23,11 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
-  final TextEditingController _idNumberController = TextEditingController();
+  // final TextEditingController _idNumberController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
 
   bool _isPasswordVisible = false;
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -27,7 +35,7 @@ class _SignUpFormState extends State<SignUpForm> {
     _passwordController.dispose();
     _nameController.dispose();
     _surnameController.dispose();
-    _idNumberController.dispose();
+    // _idNumberController.dispose();
     _phoneNumberController.dispose();
     super.dispose();
   }
@@ -35,8 +43,9 @@ class _SignUpFormState extends State<SignUpForm> {
   String? validateGeorgianPhone(String? value) {
     final t = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) return t.phoneRequired;
-    final phoneRegex = RegExp(r'^\+9955\d{8}$');
-    if (!phoneRegex.hasMatch(value)) {
+    final phoneRegex = RegExp(r'^5\d{8}$');
+
+    if (!phoneRegex.hasMatch(value.trim())) {
       return t.georgianPhoneValidation;
     }
     return null;
@@ -47,6 +56,59 @@ class _SignUpFormState extends State<SignUpForm> {
     if (value == null || value.isEmpty) return t.idRequired;
     if (value.length != 11) return t.idInvalid;
     return null;
+  }
+
+  void handleRegister() async {
+    final data = {
+      "first_name": _nameController.text,
+      "last_name": _surnameController.text,
+      "phone_number": _phoneNumberController.text,
+      "email": _emailController.text,
+      "password": _passwordController.text,
+    };
+    try {
+      // Check if form validation passed
+      if (!_formKey.currentState!.validate()) {
+        return; // Exit if validation fails
+      }
+
+      await registerUser("api/auth/register", data);
+
+      // Show success snackbar
+      showSuccessfulRegistration();
+
+      Provider.of<AuthProvider>(context, listen: false).setAuthenticated(true);
+      GoRouter.of(context).go("/");
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text("Error"),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("OK"),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void showSuccessfulRegistration() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          AppLocalizations.of(context)!.registrationSuccess,
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
   }
 
   @override
@@ -72,13 +134,13 @@ class _SignUpFormState extends State<SignUpForm> {
             validator: (value) => TValidator.validatSurname(context, value),
           ),
           const SizedBox(height: 16),
-          buildLabel(t.idNumber),
-          TextFormField(
-            controller: _idNumberController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(hintText: t.idNumberHint),
-            validator: validateID,
-          ),
+          // buildLabel(t.idNumber),
+          // TextFormField(
+          //   controller: _idNumberController,
+          //   keyboardType: TextInputType.number,
+          //   decoration: InputDecoration(hintText: t.idNumberHint),
+          //   validator: validateID,
+          // ),
           const SizedBox(height: 16),
           buildLabel(t.phoneNumber),
           Row(
@@ -101,6 +163,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 child: TextFormField(
                   controller: _phoneNumberController,
                   keyboardType: TextInputType.phone,
+                  maxLength: 9,
+
                   decoration: InputDecoration(hintText: t.phoneNumberHint),
                   validator: validateGeorgianPhone,
                 ),
@@ -140,17 +204,7 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  print('✅ All valid');
-                  print('Name: ${_nameController.text}');
-                  print('Surname: ${_surnameController.text}');
-                  print('ID: ${_idNumberController.text}');
-                  print('Phone: ${_phoneNumberController.text}');
-                  print('Email: ${_emailController.text}');
-                  print('Password: ${_passwordController.text}');
-                }
-              },
+              onPressed: handleRegister,
               child: Text(t.next),
             ),
           ),

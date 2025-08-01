@@ -1,12 +1,12 @@
 import express from "express"
 import * as bcrypt from "bcrypt"
 import client from "../../config/db.js"
-import { validateUser } from "../../middlewares/validator/validateUser.js"
+import { validateUserRegister } from "../../middlewares/validator/validateUser.js"
 import { generateAccessToken, generateRefreshToken } from "../../utils/tokenGenerator.js"
 const router = express.Router()
 
 
-router.post("/", validateUser, async (request, response) => {
+router.post("/register", validateUserRegister, async (request, response) => {
   try {
     const { first_name, last_name, phone_number, email, password } = request.body;
 
@@ -38,7 +38,7 @@ router.post("/", validateUser, async (request, response) => {
  
     response.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV !== "development",
       sameSite: "Strict",
       maxAge: 1000 * 60 * 60 * 24 * 14,
     });

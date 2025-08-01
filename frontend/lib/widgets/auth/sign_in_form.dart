@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/l10n/app_localizations.dart';
+import 'package:frontend/utils/http/auth/login_user.dart';
+import 'package:frontend/utils/providers/auth_provider.dart';
 import 'package:frontend/utils/validator/validation.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -16,6 +20,41 @@ class _SignInFormState extends State<SignInForm> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
+  void handleLogin() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    if (!context.mounted) return;
+    final data = {
+      "email": _emailController.text,
+      "password": _passwordController.text,
+    };
+
+    try {
+      await loginUser(context, "api/auth/login", data);
+
+      Provider.of<AuthProvider>(context, listen: false).setAuthenticated(true);
+      GoRouter.of(context).go("/");
+    } catch (e) {
+      print(e.toString());
+      showErrorMessage(e);
+    }
+  }
+
+  void showErrorMessage(Object e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          e.toString(),
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -85,15 +124,7 @@ class _SignInFormState extends State<SignInForm> {
           const SizedBox(height: 32.0),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  print('Email: ${_emailController.text}');
-                  print('Password: ${_passwordController.text}');
-                }
-              },
-              child: Text(t.next),
-            ),
+            child: ElevatedButton(onPressed: handleLogin, child: Text(t.next)),
           ),
         ],
       ),

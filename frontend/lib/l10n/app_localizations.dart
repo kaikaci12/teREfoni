@@ -422,30 +422,6 @@ abstract class AppLocalizations {
   /// **'ID Number must be exactly 11 digits'**
   String get idInvalid;
 
-  /// No description provided for @nameRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'სახელის მითითება სავალდებულოა.'**
-  String get nameRequired;
-
-  /// No description provided for @nameTooShort.
-  ///
-  /// In en, this message translates to:
-  /// **'სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.'**
-  String get nameTooShort;
-
-  /// No description provided for @surnameRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'გვარის მითითება სავალდებულოა.'**
-  String get surnameRequired;
-
-  /// No description provided for @surnameTooShort.
-  ///
-  /// In en, this message translates to:
-  /// **'გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.'**
-  String get surnameTooShort;
-
   /// No description provided for @emailRequired.
   ///
   /// In en, this message translates to:
@@ -469,6 +445,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password must be at least 6 characters.'**
   String get passwordTooShort;
+
+  /// No description provided for @nameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required.'**
+  String get nameRequired;
+
+  /// No description provided for @nameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 2 characters.'**
+  String get nameTooShort;
+
+  /// No description provided for @surnameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Surname is required.'**
+  String get surnameRequired;
+
+  /// No description provided for @surnameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Surname must be at least 2 characters.'**
+  String get surnameTooShort;
+
+  /// No description provided for @registrationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration successful!'**
+  String get registrationSuccess;
+
+  /// No description provided for @userNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'User not found'**
+  String get userNotFound;
+
+  /// No description provided for @incorrectPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect Password'**
+  String get incorrectPassword;
 }
 
 class _AppLocalizationsDelegate

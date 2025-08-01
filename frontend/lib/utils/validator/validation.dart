@@ -65,24 +65,12 @@ class TValidator {
       return t.nameRequired;
     }
 
-    // Define a regular expression pattern for the username.
-    const pattern = r"^[a-zA-Z0-9_-]{3,20}$";
-
-    // Create a RegExp instance from the pattern.
-    final regex = RegExp(pattern);
-
-    // Use the hasMatch method to check if the username matches the pattern.
-    bool isValid = regex.hasMatch(username);
-
-    // Check if the username doesn't start or end with an underscore or hyphen.
-    if (isValid) {
-      isValid =
-          !username.startsWith('_') &&
-          !username.startsWith('-') &&
-          !username.endsWith('_') &&
-          !username.endsWith('-') &&
-          username.length > 2;
-    }
+    bool isValid =
+        !username.startsWith('_') &&
+        !username.startsWith('-') &&
+        !username.endsWith('_') &&
+        !username.endsWith('-') &&
+        username.length > 2;
 
     if (!isValid) {
       return t.nameTooShort;
@@ -97,24 +85,14 @@ class TValidator {
       return t.surnameRequired;
     }
 
-    // Define a regular expression pattern for the username.
-    const pattern = r"^[a-zA-Z0-9_-]{3,20}$";
-
-    // Create a RegExp instance from the pattern.
-    final regex = RegExp(pattern);
-
-    // Use the hasMatch method to check if the username matches the pattern.
-    bool isValid = regex.hasMatch(username);
-
     // Check if the username doesn't start or end with an underscore or hyphen.
-    if (isValid) {
-      isValid =
-          !username.startsWith('_') &&
-          !username.startsWith('-') &&
-          !username.endsWith('_') &&
-          !username.endsWith('-') &&
-          username.length > 2;
-    }
+
+    bool isValid =
+        !username.startsWith('_') &&
+        !username.startsWith('-') &&
+        !username.endsWith('_') &&
+        !username.endsWith('-') &&
+        username.length > 2;
 
     if (!isValid) {
       return t.surnameTooShort;
