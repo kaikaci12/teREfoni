@@ -67,7 +67,10 @@
 "surnameTooShort": "Surname must be at least 2 characters.",
 "registrationSuccess": "Registration successful!",
 "userNotFound":"User not found",
-"incorrectPassword":"Incorrect Password"
-
+"incorrectPassword":"Incorrect Password",
+"offers":"Offers",
+"account":"Account",
+"orders":"Orders"
+  
   }
   

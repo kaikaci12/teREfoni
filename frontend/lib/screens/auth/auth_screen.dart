@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
+
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/widgets/auth/sign_in_form.dart';
 import 'package:frontend/widgets/auth/sign_up_form.dart';
 import 'package:frontend/widgets/auth/social_login.dart';
-import 'package:frontend/utils/constants/localization/locales.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});

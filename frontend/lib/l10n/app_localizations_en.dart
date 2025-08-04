@@ -203,4 +203,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get incorrectPassword => 'Incorrect Password';
+
+  @override
+  String get offers => 'Offers';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get orders => 'Orders';
 }

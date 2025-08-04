@@ -203,4 +203,13 @@ class AppLocalizationsKa extends AppLocalizations {
 
   @override
   String get incorrectPassword => 'არასწორი პაროლი';
+
+  @override
+  String get offers => 'შემოთავაზებები';
+
+  @override
+  String get account => 'ანგარიში';
+
+  @override
+  String get orders => 'შეკვეთები';
 }

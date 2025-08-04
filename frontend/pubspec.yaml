@@ -39,9 +39,9 @@ dependencies:
   get: ^4.7.2
   url_launcher: ^6.3.2
   intl: ^0.20.2
-  flutter_localization: ^0.3.3
-  flutter_web_plugins: 
+  flutter_localizations:
     sdk: flutter
+  
   flutter_secure_storage: ^9.2.4
   jwt_decoder: ^2.0.1
   provider: ^6.1.5
@@ -76,6 +76,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/
     - assets/images/
     - assets/icons/
 

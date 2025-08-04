@@ -12,6 +12,22 @@ router.post("/register", validateUserRegister, async (request, response) => {
 
     const hashedPassword = await bcrypt.hash(password, 11);
 
+    // First create the table if it doesn't exist
+    const createTableQuery = `
+      CREATE TABLE IF NOT EXISTS users (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        first_name VARCHAR(255) NOT NULL,
+        last_name VARCHAR(255) NOT NULL,
+        phone_number VARCHAR(20),
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    
+    await client.query(createTableQuery);
+
+    // Then insert the user
     const userInsertQuery = `
       INSERT INTO users (first_name, last_name, phone_number, email, password)
       VALUES ($1, $2, $3, $4, $5)
@@ -26,7 +42,18 @@ router.post("/register", validateUserRegister, async (request, response) => {
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
 
-    // Save refresh token in DB
+    const createRefreshTableQuery = `
+      CREATE TABLE IF NOT EXISTS refresh_tokens (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+        token TEXT NOT NULL,
+        expires_at TIMESTAMPTZ NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    
+    await client.query(createRefreshTableQuery);
+
     const refreshInsertQuery = `
       INSERT INTO refresh_tokens (user_id, token, expires_at)
       VALUES ($1, $2, $3);
@@ -47,7 +74,7 @@ router.post("/register", validateUserRegister, async (request, response) => {
       message: "User added successfully",
       user: {
         id: user.id,
-        name: user.name,
+        first_name: user.first_name,
         last_name: user.last_name,
         phone_number: user.phone_number,
         email: user.email,

@@ -3,7 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-const String _baseUrl = 'http://localhost:3000';
+const String _baseUrl = kIsWeb
+    ? 'http://localhost:3000'
+    : "http://10.0.2.2:3000";
 final _secureStorage = const FlutterSecureStorage();
 
 Future<Map<String, dynamic>> registerUser(String endpoint, dynamic data) async {

@@ -14,7 +14,7 @@ router.post("/login", validateUserLogin, async (req, res) => {
     const result = await client.query(`SELECT * FROM users WHERE email = $1`, [email]);
     const user = result.rows[0];
 
-    // ⚠️ Handle "email not found"
+    // ⚠️ Handle "user not found"
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

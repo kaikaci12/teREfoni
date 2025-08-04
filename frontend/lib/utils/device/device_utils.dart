@@ -5,8 +5,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+// lib/utils/screen_type_detector.dart
+
+import 'package:flutter/widgets.dart'; // Import for MediaQuery or LayoutBuilder
+
+/// Enum to define different screen types based on width.
 
 class TDeviceUtils {
+  static String getScreenType(double width) {
+    if (width < 600) {
+      return "mobile";
+    } else if (width < 1200) {
+      return "tablet";
+    } else {
+      return "desktop";
+    }
+  }
+
   static void hideKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
   }

@@ -11,7 +11,11 @@ const client = new Client({
 });
 
 client.connect()
-  .then(() => console.log("✔️ Database connected successfully"))
+  .then( async () =>{
+    await client.query("SET client_encoding TO 'UTF8'")
+    console.log("✔️ Database connected successfully")
+  }
+   )
   .catch(e => console.error("🚫 Database connection error:", e));
 
 export default client
