@@ -212,4 +212,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get orders => 'Orders';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get signUpWithEmail => 'Sign up with Email';
+
+  @override
+  String get signUpWithPhone => 'Sign up with Phone';
+
+  @override
+  String get chooseSignUpMethod => 'Choose your sign-up method';
 }

@@ -7,6 +7,8 @@ import 'package:frontend/utils/validator/validation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+enum SignUpMethod { email, phone }
+
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
 
@@ -26,6 +28,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   bool _isPasswordVisible = false;
   bool isLoading = false;
+  SignUpMethod _selectedMethod = SignUpMethod.email;
 
   @override
   void dispose() {
@@ -60,10 +63,16 @@ class _SignUpFormState extends State<SignUpForm> {
     final data = {
       "first_name": _nameController.text,
       "last_name": _surnameController.text,
-      "phone_number": _phoneNumberController.text,
-      "email": _emailController.text,
       "password": _passwordController.text,
     };
+
+    // Add email or phone based on selected method
+    if (_selectedMethod == SignUpMethod.email) {
+      data["email"] = _emailController.text;
+    } else {
+      data["phone_number"] = _phoneNumberController.text;
+    }
+
     try {
       // Check if form validation passed
       if (!_formKey.currentState!.validate()) {
@@ -110,6 +119,91 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  Widget _buildMethodSelector() {
+    final t = AppLocalizations.of(context)!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildLabel(t.chooseSignUpMethod),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _buildMethodCard(
+                title: t.signUpWithEmail,
+                icon: Icons.email_outlined,
+                isSelected: _selectedMethod == SignUpMethod.email,
+                onTap: () =>
+                    setState(() => _selectedMethod = SignUpMethod.email),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildMethodCard(
+                title: t.signUpWithPhone,
+                icon: Icons.phone_outlined,
+                isSelected: _selectedMethod == SignUpMethod.phone,
+                onTap: () =>
+                    setState(() => _selectedMethod = SignUpMethod.phone),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+      ],
+    );
+  }
+
+  Widget _buildMethodCard({
+    required String title,
+    required IconData icon,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? Theme.of(context).primaryColor.withOpacity(0.1)
+              : Colors.grey[100],
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected
+                ? Theme.of(context).primaryColor
+                : Colors.grey[300]!,
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              size: 32,
+              color: isSelected
+                  ? Theme.of(context).primaryColor
+                  : Colors.grey[600],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                color: isSelected
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey[700],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
@@ -119,6 +213,7 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _buildMethodSelector(),
           buildLabel(t.name),
           TextFormField(
             controller: _nameController,
@@ -140,44 +235,48 @@ class _SignUpFormState extends State<SignUpForm> {
           //   decoration: InputDecoration(hintText: t.idNumberHint),
           //   validator: validateID,
           // ),
-          const SizedBox(height: 16),
-          buildLabel(t.phoneNumber),
-          Row(
-            children: [
-              Row(
-                children: [
-                  Image.network(
-                    "https://flagcdn.com/w40/ge.png",
-                    width: 15,
-                    height: 10,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.flag, size: 15),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text("+995"),
-                ],
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextFormField(
-                  controller: _phoneNumberController,
-                  keyboardType: TextInputType.phone,
-                  maxLength: 9,
+          // const SizedBox(height: 16),
 
-                  decoration: InputDecoration(hintText: t.phoneNumberHint),
-                  validator: validateGeorgianPhone,
+          // Conditional fields based on selected method
+          if (_selectedMethod == SignUpMethod.phone) ...[
+            buildLabel(t.phoneNumber),
+            Row(
+              children: [
+                Row(
+                  children: [
+                    Image.network(
+                      "https://flagcdn.com/w40/ge.png",
+                      width: 15,
+                      height: 10,
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Icon(Icons.flag, size: 15),
+                    ),
+                    const SizedBox(width: 4),
+                    const Text("+995"),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          buildLabel(t.email),
-          TextFormField(
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(hintText: t.emailHint),
-            validator: (value) => TValidator.validateEmail(context, value),
-          ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextFormField(
+                    controller: _phoneNumberController,
+                    keyboardType: TextInputType.phone,
+                    maxLength: 9,
+                    decoration: InputDecoration(hintText: t.phoneNumberHint),
+                    validator: validateGeorgianPhone,
+                  ),
+                ),
+              ],
+            ),
+          ] else ...[
+            buildLabel(t.email),
+            TextFormField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(hintText: t.emailHint),
+              validator: (value) => TValidator.validateEmail(context, value),
+            ),
+          ],
+
           const SizedBox(height: 24),
           buildLabel(t.password),
           TextFormField(

@@ -10,7 +10,7 @@ class BannerWidget extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final screenType = TDeviceUtils.getScreenType(constraints.maxWidth);
-        double bannerHeight = screenType == "desktop" ? 600 : 180;
+        double bannerHeight = screenType == "desktop" ? 400 : 180;
 
         return Column(
           children: [

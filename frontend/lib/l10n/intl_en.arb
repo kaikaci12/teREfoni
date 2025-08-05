@@ -70,7 +70,11 @@
 "incorrectPassword":"Incorrect Password",
 "offers":"Offers",
 "account":"Account",
-"orders":"Orders"
+"orders":"Orders",
+"home":"Home",
+"signUpWithEmail": "Sign up with Email",
+"signUpWithPhone": "Sign up with Phone",
+"chooseSignUpMethod": "Choose your sign-up method"
   
   }
   

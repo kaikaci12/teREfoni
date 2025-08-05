@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: const [AppBarActions()],
       ),
-      bottomNavigationBar: const BottomNavigationWidget(),
+
       body: LayoutBuilder(
         builder: (context, constraints) {
           final screenType = TDeviceUtils.getScreenType(constraints.maxWidth);

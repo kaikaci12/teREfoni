@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:frontend/l10n/app_localizations.dart';
-import 'package:frontend/screens/auth/auth_screen.dart';
-import 'package:frontend/screens/home_screen.dart';
+import 'package:frontend/router.dart';
+
 import 'package:frontend/utils/providers/auth_provider.dart';
 // auto-generated
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-final _router = GoRouter(
-  routes: [
-    GoRoute(path: '/', builder: (context, state) => HomeScreen()),
-    GoRoute(path: "/account", builder: (context, state) => AuthScreen()),
-  ],
-);
 
 void main() {
   runApp(const MyApp());
@@ -48,13 +39,14 @@ class _MyAppState extends State<MyApp> {
         locale: _locale,
         debugShowCheckedModeBanner: false,
         title: 'TEREFONI',
-        routerConfig: _router,
+        routerConfig: router,
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
+
         supportedLocales: const [Locale('en'), Locale('ka')],
         theme: ThemeData(primarySwatch: Colors.teal, fontFamily: 'Inter'),
       ),

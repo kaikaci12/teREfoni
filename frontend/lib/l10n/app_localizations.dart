@@ -505,6 +505,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Orders'**
   String get orders;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @signUpWithEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up with Email'**
+  String get signUpWithEmail;
+
+  /// No description provided for @signUpWithPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up with Phone'**
+  String get signUpWithPhone;
+
+  /// No description provided for @chooseSignUpMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your sign-up method'**
+  String get chooseSignUpMethod;
 }
 
 class _AppLocalizationsDelegate

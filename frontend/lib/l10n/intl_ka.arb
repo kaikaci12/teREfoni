@@ -71,9 +71,10 @@
     "incorrectPassword":"არასწორი პაროლი",
 "offers":"შემოთავაზებები",
 "account":"ანგარიში",
-"orders":"შეკვეთები"
-
-
-
+"orders":"შეკვეთები",
+"home":"სახლი",
+"signUpWithEmail": "რეგისტრაცია ელ-ფოსტით",
+"signUpWithPhone": "რეგისტრაცია ტელეფონით",
+"chooseSignUpMethod": "აირჩიეთ რეგისტრაციის მეთოდი"
   }
   

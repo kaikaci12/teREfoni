@@ -9,19 +9,6 @@ class AppBarActions extends StatelessWidget {
     final t = AppLocalizations.of(context)!;
     return Row(
       children: [
-        // handle larger screen sizes later
-        // Row(
-        //   children: [
-        //     Text(t.account, style: TextStyle()),
-        //     SizedBox(width: 5),
-        //     IconButton(
-        //       icon: const Icon(Icons.person),
-        //       onPressed: () {
-        //         // Handle cart tap
-        //       },
-        //     ),
-        //   ],
-        // ),
         IconButton(
           icon: const Icon(Icons.shopping_cart_outlined),
           onPressed: () {
