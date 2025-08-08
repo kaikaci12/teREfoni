@@ -72,9 +72,13 @@
 "account":"Account",
 "orders":"Orders",
 "home":"Home",
-"signUpWithEmail": "Sign up with Email",
-"signUpWithPhone": "Sign up with Phone",
-"chooseSignUpMethod": "Choose your sign-up method"
+"signUpWithEmail": "With Email",
+"signUpWithPhone": "With Phone",
+"chooseSignUpMethod": "Choose your sign-up method",
+"signInWithEmail": "With Email",
+"signInWithPhone": "With Phone",
+"chooseSignInMethod": "Choose your sign-in method",
+"wishlists": "Wishlists"
   
   }
   

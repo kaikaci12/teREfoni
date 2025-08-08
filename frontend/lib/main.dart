@@ -8,7 +8,10 @@ import 'package:frontend/utils/providers/auth_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final authProvider = AuthProvider();
+  await authProvider.checkAuthStatus();
   runApp(const MyApp());
 }
 

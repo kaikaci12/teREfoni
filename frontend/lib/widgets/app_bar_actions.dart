@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/l10n/app_localizations.dart';
+import 'package:frontend/widgets/language_selector.dart';
 
 class AppBarActions extends StatelessWidget {
   const AppBarActions({Key? key}) : super(key: key);
@@ -21,6 +22,8 @@ class AppBarActions extends StatelessWidget {
             // Handle notification tap
           },
         ),
+        SizedBox(width: 30),
+        LanguageSelector(),
       ],
     );
   }

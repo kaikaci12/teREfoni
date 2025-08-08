@@ -217,11 +217,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home => 'Home';
 
   @override
-  String get signUpWithEmail => 'Sign up with Email';
+  String get signUpWithEmail => 'With Email';
 
   @override
-  String get signUpWithPhone => 'Sign up with Phone';
+  String get signUpWithPhone => 'With Phone';
 
   @override
   String get chooseSignUpMethod => 'Choose your sign-up method';
+
+  @override
+  String get signInWithEmail => 'With Email';
+
+  @override
+  String get signInWithPhone => 'With Phone';
+
+  @override
+  String get chooseSignInMethod => 'Choose your sign-in method';
+
+  @override
+  String get wishlists => 'Wishlists';
 }

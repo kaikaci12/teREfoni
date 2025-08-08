@@ -73,8 +73,12 @@
 "account":"ანგარიში",
 "orders":"შეკვეთები",
 "home":"სახლი",
-"signUpWithEmail": "რეგისტრაცია ელ-ფოსტით",
-"signUpWithPhone": "რეგისტრაცია ტელეფონით",
-"chooseSignUpMethod": "აირჩიეთ რეგისტრაციის მეთოდი"
+"signUpWithEmail": "ელ-ფოსტით",
+"signUpWithPhone": "ტელეფონით",
+"chooseSignUpMethod": "აირჩიეთ რეგისტრაციის მეთოდი",
+"signInWithEmail": "ელ-ფოსტით",
+"signInWithPhone": "ტელეფონით",
+"chooseSignInMethod": "აირჩიეთ შესვლის მეთოდი",
+"wishlists": "სურვილების სია"
   }
   

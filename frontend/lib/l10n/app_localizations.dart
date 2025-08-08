@@ -515,13 +515,13 @@ abstract class AppLocalizations {
   /// No description provided for @signUpWithEmail.
   ///
   /// In en, this message translates to:
-  /// **'Sign up with Email'**
+  /// **'With Email'**
   String get signUpWithEmail;
 
   /// No description provided for @signUpWithPhone.
   ///
   /// In en, this message translates to:
-  /// **'Sign up with Phone'**
+  /// **'With Phone'**
   String get signUpWithPhone;
 
   /// No description provided for @chooseSignUpMethod.
@@ -529,6 +529,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose your sign-up method'**
   String get chooseSignUpMethod;
+
+  /// No description provided for @signInWithEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'With Email'**
+  String get signInWithEmail;
+
+  /// No description provided for @signInWithPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'With Phone'**
+  String get signInWithPhone;
+
+  /// No description provided for @chooseSignInMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your sign-in method'**
+  String get chooseSignInMethod;
+
+  /// No description provided for @wishlists.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlists'**
+  String get wishlists;
 }
 
 class _AppLocalizationsDelegate

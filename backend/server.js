@@ -1,18 +1,69 @@
 import express from "express";
-import dotenv from 'dotenv'
-import usersRegisterRoute from "./routes/auth/register.js"
-import usersLoginRoute from "./routes/auth/login.js"
-import refreshTokenRoute from "./routes/auth/refresh.js"
-import cors from "cors"
-dotenv.config()
-const PORT = process.env.PORT || 3000
-const app = express()
-app.use(express.json())
+import dotenv from 'dotenv';
+import authRoutes from "./routes/auth/auth.js";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
+dotenv.config();
+
+const PORT = process.env.PORT || 3000;
+const app = express();
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
-app.use("/api/auth",usersRegisterRoute)
-app.use("/api/auth",usersLoginRoute)
-app.use("/api/auth",refreshTokenRoute)
-app.listen(PORT,()=>{
-    console.log("Server is running on PORT",PORT)
-})
+app.use(cookieParser());
+
+// Configure CORS properly for cookies - allow multiple origins for development
+const allowedOrigins = [
+  "http://localhost:5173",    // Vite default
+  "http://localhost:3000",    // React default
+  "http://localhost:8080",    // Flutter web default
+  "http://localhost:58895",   // Flutter web dev server
+  "http://localhost:58896",   // Flutter web dev server alternative
+  "http://localhost:58897",   // Flutter web dev server alternative
+  "http://localhost:58898",   // Flutter web dev server alternative
+  "http://localhost:58899",   // Flutter web dev server alternative
+  "http://localhost:61939",   // Flutter web dev server (current)
+  "http://localhost:61940",   // Flutter web dev server alternative
+  "http://localhost:61941",   // Flutter web dev server alternative
+  "http://localhost:61942",   // Flutter web dev server alternative
+  "http://localhost:61943",   // Flutter web dev server alternative
+  "http://localhost:61944",   // Flutter web dev server alternative
+  "http://localhost:61945",   // Flutter web dev server alternative
+  process.env.FRONTEND_URL,   // Environment variable
+].filter(Boolean); // Remove undefined values
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow any localhost origin for development
+    if (origin.startsWith('http://localhost:') || origin.startsWith('https://localhost:')) {
+      console.log('CORS allowed origin:', origin);
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,  // <-- Important: allows cookies to be sent/received
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}));
+
+// Add a test endpoint
+app.get('/api/auth/test', (req, res) => {
+  res.json({ message: 'Server is running and accessible!' });
+});
+
+app.use("/api/auth", authRoutes);
+
+app.listen(PORT, () => {
+  console.log("Server is running on PORT", PORT);
+  console.log("Allowed CORS origins:", allowedOrigins);
+});

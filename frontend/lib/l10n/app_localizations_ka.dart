@@ -217,11 +217,23 @@ class AppLocalizationsKa extends AppLocalizations {
   String get home => 'სახლი';
 
   @override
-  String get signUpWithEmail => 'რეგისტრაცია ელ-ფოსტით';
+  String get signUpWithEmail => 'ელ-ფოსტით';
 
   @override
-  String get signUpWithPhone => 'რეგისტრაცია ტელეფონით';
+  String get signUpWithPhone => 'ტელეფონით';
 
   @override
   String get chooseSignUpMethod => 'აირჩიეთ რეგისტრაციის მეთოდი';
+
+  @override
+  String get signInWithEmail => 'ელ-ფოსტით';
+
+  @override
+  String get signInWithPhone => 'ტელეფონით';
+
+  @override
+  String get chooseSignInMethod => 'აირჩიეთ შესვლის მეთოდი';
+
+  @override
+  String get wishlists => 'სურვილების სია';
 }

@@ -1,24 +1,18 @@
-import express from "express";
 import client from "../../config/db.js";
-import { verifyRefreshToken } from "../../middlewares/verifyToken.js";
 import { generateAccessToken } from "../../utils/tokenGenerator.js";
 
-const router = express.Router();
-
-router.get("/refresh", verifyRefreshToken, async (req, res) => {
+export const refreshToken = async (req, res) => {
   const userId = req.user.sub; // You are using JWT's `sub` claim as userId — that's fine
   const refreshToken = req.refreshToken;
 
   try {
-  
     const result = await client.query(
       `SELECT * FROM refresh_tokens WHERE token = $1`,
       [refreshToken]
     );
 
     const tokenRecord = result.rows[0];
-
-    
+   
     if (!tokenRecord) {
       return res
         .status(401)
@@ -35,6 +29,4 @@ router.get("/refresh", verifyRefreshToken, async (req, res) => {
     console.error("Refresh error:", error.message);
     return res.status(500).json({ message: "Something went wrong" });
   }
-});
-
-export default router;
+}; 

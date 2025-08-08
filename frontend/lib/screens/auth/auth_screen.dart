@@ -5,6 +5,7 @@ import 'package:frontend/main.dart';
 import 'package:frontend/widgets/auth/sign_in_form.dart';
 import 'package:frontend/widgets/auth/sign_up_form.dart';
 import 'package:frontend/widgets/auth/social_login.dart';
+import 'package:frontend/widgets/language_selector.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -15,12 +16,6 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool _isSignUp = true;
-  String _selectedLang = "ka";
-
-  final List<Map<String, String>> _languageOptions = [
-    {'code': "ka", 'label': "GE", 'flagUrl': 'https://flagcdn.com/w40/ge.png'},
-    {'code': 'en', 'label': 'EN', 'flagUrl': 'https://flagcdn.com/w40/us.png'},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,43 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   // Language Selector (Top-right)
                   Align(
                     alignment: Alignment.topRight,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _selectedLang,
-                        icon: const Icon(Icons.keyboard_arrow_down),
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedLang = value!;
-                            Locale newLocale = Locale(value);
-                            MyApp.setLocale(context, newLocale);
-                          });
-                          // Optional: change app language here
-                        },
-                        items: _languageOptions.map((lang) {
-                          return DropdownMenuItem<String>(
-                            value: lang['code'],
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  lang['flagUrl']!,
-                                  width: 24,
-                                  height: 16,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      const Icon(Icons.flag, size: 24),
-                                ),
-                                const SizedBox(width: 8.0),
-                                Text(lang['label']!),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
+                    child: LanguageSelector(),
                   ),
 
                   const SizedBox(height: 16.0),

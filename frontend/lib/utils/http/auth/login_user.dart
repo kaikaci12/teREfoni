@@ -2,10 +2,15 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/l10n/app_localizations.dart';
-import 'package:http/http.dart' as http;
+import 'package:frontend/utils/providers/auth_provider.dart';
+import 'package:dio/dio.dart';
+import 'package:dio/browser.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 
-const String _baseUrl = 'http://localhost:3000';
+const String _baseUrl = kIsWeb
+    ? 'http://localhost:3000'
+    : "http://10.0.2.2:3000";
 final _secureStorage = const FlutterSecureStorage();
 
 Future<Map<String, dynamic>> loginUser(
@@ -13,19 +18,29 @@ Future<Map<String, dynamic>> loginUser(
   String endpoint,
   dynamic data,
 ) async {
-  final response = await http.post(
-    Uri.parse('$_baseUrl/$endpoint'),
-    headers: {'Content-Type': 'application/json; charset=UTF-8'},
-    body: json.encode(data),
-  );
-  return _handleResponse(context, response);
+  try {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: _baseUrl,
+        contentType: 'application/json; charset=UTF-8',
+      ),
+    );
+
+    // Enable sending cookies automatically on web
+    if (kIsWeb) {
+      (dio.httpClientAdapter as BrowserHttpClientAdapter).withCredentials =
+          true;
+    }
+
+    final response = await dio.post('/$endpoint', data: data);
+    return _handleResponse(context, response);
+  } on DioException catch (e) {
+    return _handleDioError(context, e);
+  }
 }
 
-Map<String, dynamic> _handleResponse(
-  BuildContext context,
-  http.Response response,
-) {
-  final data = json.decode(response.body);
+Map<String, dynamic> _handleResponse(BuildContext context, Response response) {
+  final data = response.data;
 
   if (response.statusCode == 200 || response.statusCode == 201) {
     final accessToken = data['accessToken'];
@@ -40,7 +55,7 @@ Map<String, dynamic> _handleResponse(
       _secureStorage.write(key: 'accessToken', value: accessToken);
       _secureStorage.write(key: 'refreshToken', value: refreshToken);
     }
-
+    Provider.of<AuthProvider>(context, listen: false).setAuthenticated(true);
     return data;
   } else if (response.statusCode == 400) {
     throw Exception('Invalid request: ${data['message']}');
@@ -56,5 +71,30 @@ Map<String, dynamic> _handleResponse(
     throw Exception(data['message']);
   } else {
     throw Exception('Failed to load data: ${response.statusCode}');
+  }
+}
+
+Map<String, dynamic> _handleDioError(BuildContext context, DioException e) {
+  if (e.response != null) {
+    final data = e.response!.data;
+    final statusCode = e.response!.statusCode;
+
+    if (statusCode == 400) {
+      throw Exception('Invalid request: ${data['message']}');
+    } else if (statusCode == 404 || statusCode == 401) {
+      String message = data['message'].toString().toLowerCase().trim();
+      final t = AppLocalizations.of(context)!;
+      if (message.contains("password")) {
+        throw Exception(t.incorrectPassword);
+      }
+      if (message.contains("user")) {
+        throw Exception(t.userNotFound);
+      }
+      throw Exception(data['message']);
+    } else {
+      throw Exception('Failed to load data: $statusCode');
+    }
+  } else {
+    throw Exception('Network error: ${e.message}');
   }
 }

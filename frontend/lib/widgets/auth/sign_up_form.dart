@@ -80,28 +80,30 @@ class _SignUpFormState extends State<SignUpForm> {
         return; // Exit if validation fails
       }
 
-      await registerUser("api/auth/register", data);
+      await registerUser(context, "api/auth/register", data);
 
       // Show success snackbar
       showSuccessfulRegistration();
 
-      Provider.of<AuthProvider>(context, listen: false).setAuthenticated(true);
       GoRouter.of(context).go("/");
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text("Error"),
-          content: Text(e.toString()),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("OK"),
-            ),
-          ],
-        ),
-      );
+      showErrorMessage(e);
     }
+  }
+
+  void showErrorMessage(Object e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          e.toString(),
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
   }
 
   void showSuccessfulRegistration() {
@@ -125,7 +127,6 @@ class _SignUpFormState extends State<SignUpForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildLabel(t.chooseSignUpMethod),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -177,7 +178,7 @@ class _SignUpFormState extends State<SignUpForm> {
             width: isSelected ? 2 : 1,
           ),
         ),
-        child: Column(
+        child: Row(
           children: [
             Icon(
               icon,

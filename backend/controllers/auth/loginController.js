@@ -1,17 +1,25 @@
-import express from "express";
 import * as bcrypt from "bcrypt";
 import client from "../../config/db.js";
-import { validateUserLogin } from "../../middlewares/validator/validateUser.js";
 import { generateAccessToken, generateRefreshToken } from "../../utils/tokenGenerator.js";
 
-const router = express.Router();
-
-router.post("/login", validateUserLogin, async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, phone_number, password } = req.body;
 
-    // ✅ Use parameterized query to prevent SQL injection
-    const result = await client.query(`SELECT * FROM users WHERE email = $1`, [email]);
+    let userQuery = "";
+    let identifierValue = "";
+    
+    if (email) {
+      userQuery = "SELECT * FROM users WHERE email = $1";
+      identifierValue = email;
+    } else if (phone_number) {
+      userQuery = "SELECT * FROM users WHERE phone_number = $1";
+      identifierValue = phone_number;
+    } else {
+      return res.status(400).json({ message: "Either email or phone number is required." });
+    }
+    
+    const result = await client.query(userQuery, [identifierValue]);
     const user = result.rows[0];
 
     // ⚠️ Handle "user not found"
@@ -40,7 +48,6 @@ router.post("/login", validateUserLogin, async (req, res) => {
     `;
     await client.query(refreshInsertQuery, [userId, refreshToken, expiresAt]);
 
-    // ✅ Set refresh token in cookie (optional for web)
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
@@ -53,7 +60,7 @@ router.post("/login", validateUserLogin, async (req, res) => {
       message: "Successful Login",
       user: {
         id: user.id,
-        name: user.name,
+        first_name: user.first_name,
         last_name: user.last_name,
         phone_number: user.phone_number,
         email: user.email,
@@ -66,6 +73,4 @@ router.post("/login", validateUserLogin, async (req, res) => {
     console.error(error.message);
     return res.status(500).json({ message: "Something went wrong" });
   }
-});
-
-export default router;
+}; 

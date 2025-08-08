@@ -7,16 +7,18 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 class AuthProvider with ChangeNotifier {
   final _storage = const FlutterSecureStorage();
   bool _isAuthenticated = false;
-
+  bool _isLoading = true;
   bool get isAuthenticated => _isAuthenticated;
-
+  bool get isLoading => _isLoading;
   AuthProvider() {
     checkAuthStatus();
   }
 
   Future<void> checkAuthStatus() async {
+    _isLoading = true;
+
     final token = await _storage.read(key: 'accessToken');
-    print("token: $token");
+    debugPrint("token: $token");
     if (token != null && !JwtDecoder.isExpired(token)) {
       _isAuthenticated = true;
     } else {
@@ -29,18 +31,12 @@ class AuthProvider with ChangeNotifier {
         _isAuthenticated = false;
       }
     }
-
+    _isLoading = false;
     notifyListeners();
   }
 
   void setAuthenticated(bool value) {
     _isAuthenticated = value;
-    notifyListeners();
-  }
-
-  Future<void> logout() async {
-    await _storage.deleteAll();
-    _isAuthenticated = false;
     notifyListeners();
   }
 }
