@@ -60,19 +60,6 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   void handleRegister() async {
-    final data = {
-      "first_name": _nameController.text,
-      "last_name": _surnameController.text,
-      "password": _passwordController.text,
-    };
-
-    // Add email or phone based on selected method
-    if (_selectedMethod == SignUpMethod.email) {
-      data["email"] = _emailController.text;
-    } else {
-      data["phone_number"] = _phoneNumberController.text;
-    }
-
     try {
       // Check if form validation passed
       if (!_formKey.currentState!.validate()) {
@@ -80,7 +67,22 @@ class _SignUpFormState extends State<SignUpForm> {
         return; // Exit if validation fails
       }
 
-      await registerUser(context, "api/auth/register", data);
+      // Extract email, phone number, password, and name from the data map
+      String email = _emailController.text;
+
+      String phoneNumber = _phoneNumberController.text;
+      String password = _passwordController.text;
+      String firstName = _nameController.text;
+      String lastName = _surnameController.text;
+
+      await registerUser(
+        email,
+        phoneNumber,
+        password,
+        firstName,
+        lastName,
+        context,
+      );
 
       // Show success snackbar
       showSuccessfulRegistration();

@@ -34,18 +34,21 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  go_router: ^16.0.0
-  http: ^1.4.0
-  get: ^4.7.2
-  url_launcher: ^6.3.2
+  go_router: ^12.1.3
+  http: ^0.13.6  # Using older version without web dependency
+  get: ^4.6.5  # Using older version without web dependency
+  url_launcher: ^6.0.20  # Using older version without web dependency
   intl: ^0.20.2
   flutter_localizations:
     sdk: flutter
   
-  flutter_secure_storage: ^9.2.4
+  flutter_secure_storage: ^9.0.0
   jwt_decoder: ^2.0.1
-  provider: ^6.1.5
-  dio: ^5.9.0
+  provider: ^6.1.1
+  # Adding Dio with a version that works on all platforms without web dependencies
+  dio: ^4.0.6  # This version works on web, mobile, and desktop without dio_web_adapter
+  cookie_jar: ^3.0.1  # For proper cookie management
+  google_sign_in: ^6.3.0
   
     
 

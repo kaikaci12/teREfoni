@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/utils/http/auth/google_sign_in.dart';
 import 'package:frontend/widgets/auth/sign_in_form.dart';
 import 'package:frontend/widgets/auth/sign_up_form.dart';
 import 'package:frontend/widgets/auth/social_login.dart';
 import 'package:frontend/widgets/language_selector.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -220,7 +222,27 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
 
-              onPressed: () {},
+              onPressed: () async {
+                try {
+                  await googleSignInFlow();
+                  GoRouter.of(context).go("/");
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        e.toString(),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red,
+                      duration: const Duration(seconds: 3),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),

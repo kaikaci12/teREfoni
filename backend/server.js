@@ -15,21 +15,9 @@ app.use(cookieParser());
 
 // Configure CORS properly for cookies - allow multiple origins for development
 const allowedOrigins = [
-  "http://localhost:5173",    // Vite default
-  "http://localhost:3000",    // React default
+  
   "http://localhost:8080",    // Flutter web default
-  "http://localhost:58895",   // Flutter web dev server
-  "http://localhost:58896",   // Flutter web dev server alternative
-  "http://localhost:58897",   // Flutter web dev server alternative
-  "http://localhost:58898",   // Flutter web dev server alternative
-  "http://localhost:58899",   // Flutter web dev server alternative
-  "http://localhost:61939",   // Flutter web dev server (current)
-  "http://localhost:61940",   // Flutter web dev server alternative
-  "http://localhost:61941",   // Flutter web dev server alternative
-  "http://localhost:61942",   // Flutter web dev server alternative
-  "http://localhost:61943",   // Flutter web dev server alternative
-  "http://localhost:61944",   // Flutter web dev server alternative
-  "http://localhost:61945",   // Flutter web dev server alternative
+
   process.env.FRONTEND_URL,   // Environment variable
 ].filter(Boolean); // Remove undefined values
 

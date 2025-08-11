@@ -22,7 +22,7 @@ class AppBarActions extends StatelessWidget {
             // Handle notification tap
           },
         ),
-        SizedBox(width: 30),
+
         LanguageSelector(),
       ],
     );

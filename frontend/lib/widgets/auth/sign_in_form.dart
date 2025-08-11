@@ -41,38 +41,29 @@ class _SignInFormState extends State<SignInForm> {
     }
     if (!context.mounted) return;
 
-    final data = {"password": _passwordController.text};
-
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    String phoneNumber = _phoneNumberController.text;
     // Add email or phone based on selected method
-    if (_selectedMethod == SignInMethod.email) {
-      data["email"] = _emailController.text;
-    } else {
-      data["phone_number"] = _phoneNumberController.text;
-    }
 
     try {
-      await loginUser(context, "api/auth/login", data);
+      await loginUser(email, phoneNumber, password, context);
 
       GoRouter.of(context).go("/");
     } catch (e) {
-      print(e.toString());
-      showErrorMessage(e);
-    }
-  }
-
-  void showErrorMessage(Object e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          e.toString(),
-          style: const TextStyle(color: Colors.white),
+      debugPrint("Login Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString().replaceAll('Exception: ', ''),
+            style: const TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 3),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        backgroundColor: Colors.red,
-        duration: const Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-    );
+      );
+    }
   }
 
   @override

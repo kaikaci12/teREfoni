@@ -553,6 +553,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wishlists'**
   String get wishlists;
+
+  /// No description provided for @emailAlreadyExists.
+  ///
+  /// In en, this message translates to:
+  /// **'Email already exists'**
+  String get emailAlreadyExists;
+
+  /// No description provided for @phoneNumberAlreadyExists.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number already exists'**
+  String get phoneNumberAlreadyExists;
 }
 
 class _AppLocalizationsDelegate

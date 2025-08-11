@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class THelperFunctions {
@@ -51,22 +50,22 @@ class THelperFunctions {
     return MediaQuery.of(context).viewPadding.bottom;
   }
 
-  static void showSnackBar(String message) {
+  static void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(
-      Get.context!,
+      context,
     ).showSnackBar(SnackBar(content: Text(message)));
   }
 
-  static void showAlert(String title, String message) {
+  static void showAlert(BuildContext context, String title, String message) {
     showDialog(
-      context: Get.context!,
-      builder: (BuildContext context) {
+      context: context,
+      builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Text(title),
           content: Text(message),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(dialogContext).pop(),
               child: const Text('OK'),
             ),
           ],
@@ -95,16 +94,16 @@ class THelperFunctions {
     return MediaQuery.of(context).orientation == Orientation.portrait;
   }
 
-  static Size screenSize() {
-    return MediaQuery.of(Get.context!).size;
+  static Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
   }
 
-  static double screenHeight() {
-    return MediaQuery.of(Get.context!).size.height;
+  static double screenHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
   }
 
-  static double screenWidth() {
-    return MediaQuery.of(Get.context!).size.width;
+  static double screenWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
   }
 
   static String getFormattedDate(
@@ -153,7 +152,7 @@ class THelperFunctions {
   /// - [T] Use this to pass firestore Timestamp
   /// - Firestore Timestamps (calls `toDate()`).
   /// - [DateTime] objects (returns as-is).
-  /// - [String] values (attempts to parse using [DateTime.tryParse]).
+  /// - d[String] values (attempts to parse using [DateTime.tryParse]).
   /// - [int] or [double] values (interpreted as Unix timestamp in milliseconds).
   ///
   /// If conversion fails, the method returns `null`.

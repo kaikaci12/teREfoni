@@ -78,7 +78,9 @@
 "signInWithEmail": "With Email",
 "signInWithPhone": "With Phone",
 "chooseSignInMethod": "Choose your sign-in method",
-"wishlists": "Wishlists"
+"wishlists": "Wishlists",
+"emailAlreadyExists": "Email already exists",
+"phoneNumberAlreadyExists": "Phone number already exists"
   
   }
   

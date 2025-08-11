@@ -236,4 +236,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wishlists => 'Wishlists';
+
+  @override
+  String get emailAlreadyExists => 'Email already exists';
+
+  @override
+  String get phoneNumberAlreadyExists => 'Phone number already exists';
 }

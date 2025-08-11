@@ -7,9 +7,9 @@ class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
   void handleLogout(BuildContext context) async {
     try {
-      final response = await logoutUser(context, "api/auth/logout");
+      final response = await logoutUser(context);
       debugPrint(response["message"]);
-      GoRoute(path: "/");
+      GoRouter.of(context).go("/");
     } catch (e) {
       debugPrint(e.toString());
       ScaffoldMessenger.of(

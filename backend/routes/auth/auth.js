@@ -3,7 +3,8 @@ import {
   registerUser, 
   loginUser, 
   logoutUser, 
-  refreshToken 
+  refreshToken, 
+  googleSignInController
 } from "../../controllers/auth/index.js";
 import { 
   validateUserRegister, 
@@ -24,5 +25,5 @@ router.delete("/logout", verifyRefreshToken, logoutUser);
 
 // Refresh token route
 router.get("/refresh", verifyRefreshToken, refreshToken);
-
+router.post("/google",googleSignInController)
 export default router;

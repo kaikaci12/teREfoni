@@ -9,13 +9,13 @@ class AppLocalizationsKa extends AppLocalizations {
   AppLocalizationsKa([String locale = 'ka']) : super(locale);
 
   @override
-  String get appTitle => 'ტეREფონი';
+  String get appTitle => 'TeREfoni';
 
   @override
-  String get welcome => 'მოგესალმებით';
+  String get welcome => 'მოგესალმებათ';
 
   @override
-  String get continueWith => 'ან განაგრძეთ როგორც';
+  String get continueWith => 'ან გააგრძელეთ';
 
   @override
   String get login => 'შესვლა';
@@ -24,7 +24,7 @@ class AppLocalizationsKa extends AppLocalizations {
   String get signup => 'რეგისტრაცია';
 
   @override
-  String get email => 'ელ. ფოსტა';
+  String get email => 'ელ-ფოსტა';
 
   @override
   String get password => 'პაროლი';
@@ -33,7 +33,7 @@ class AppLocalizationsKa extends AppLocalizations {
   String get forgotPassword => 'დაგავიწყდათ პაროლი?';
 
   @override
-  String get confirmPassword => 'გაიმეორეთ პაროლი';
+  String get confirmPassword => 'დაადასტურეთ პაროლი';
 
   @override
   String get fullName => 'სრული სახელი';
@@ -54,16 +54,16 @@ class AppLocalizationsKa extends AppLocalizations {
   String get addToCart => 'კალათაში დამატება';
 
   @override
-  String get buyNow => 'შეძენა ახლავე';
+  String get buyNow => 'ახლა ყიდვა';
 
   @override
   String get checkout => 'გადახდა';
 
   @override
-  String get total => 'ჯამი';
+  String get total => 'სულ';
 
   @override
-  String get subtotal => 'შუალედური ჯამი';
+  String get subtotal => 'ქვეჯამი';
 
   @override
   String get shipping => 'მიწოდება';
@@ -87,13 +87,13 @@ class AppLocalizationsKa extends AppLocalizations {
   String get emptyCart => 'თქვენი კალათა ცარიელია';
 
   @override
-  String get search => 'ძებნა';
+  String get search => 'ძიება';
 
   @override
   String get productDetails => 'პროდუქტის დეტალები';
 
   @override
-  String get reviews => 'შეფასებები';
+  String get reviews => 'მიმოხილვები';
 
   @override
   String get description => 'აღწერა';
@@ -102,10 +102,10 @@ class AppLocalizationsKa extends AppLocalizations {
   String get quantity => 'რაოდენობა';
 
   @override
-  String get outOfStock => 'მარაგში არ არის';
+  String get outOfStock => 'არ არის ხელმისაწვდომი';
 
   @override
-  String get inStock => 'მარაგშია';
+  String get inStock => 'ხელმისაწვდომია';
 
   @override
   String get categories => 'კატეგორიები';
@@ -114,7 +114,7 @@ class AppLocalizationsKa extends AppLocalizations {
   String get profile => 'პროფილი';
 
   @override
-  String get logout => 'გამოსვლა';
+  String get logout => 'გასვლა';
 
   @override
   String get language => 'ენა';
@@ -135,16 +135,16 @@ class AppLocalizationsKa extends AppLocalizations {
   String get idNumber => 'პირადი ნომერი';
 
   @override
-  String get emailAddress => 'ელ-ფოსტა';
+  String get emailAddress => 'ელ-ფოსტის მისამართი';
 
   @override
   String get next => 'შემდეგი';
 
   @override
-  String get nameHint => 'ჯონი';
+  String get nameHint => 'გიორგი';
 
   @override
-  String get surnameHint => 'დოუ';
+  String get surnameHint => 'მაისურაძე';
 
   @override
   String get idNumberHint => '12345678901';
@@ -153,7 +153,7 @@ class AppLocalizationsKa extends AppLocalizations {
   String get phoneNumberHint => '5XXXXXXXX';
 
   @override
-  String get emailHint => 'johndoe@example.com';
+  String get emailHint => 'giorgi@example.com';
 
   @override
   String get passwordHint => 'თქვენი პაროლი';
@@ -163,40 +163,40 @@ class AppLocalizationsKa extends AppLocalizations {
       'შეიყვანეთ სწორი ქართული ნომერი (მაგ. +9955XXXXXXXX)';
 
   @override
-  String get phoneRequired => 'ტელეფონის ნომერი სავალდებულოა';
+  String get phoneRequired => 'ტელეფონის ნომერი საჭიროა';
 
   @override
-  String get idRequired => 'პირადი ნომერი სავალდებულოა';
+  String get idRequired => 'პირადი ნომერი საჭიროა';
 
   @override
-  String get idInvalid => 'პირადი ნომერი უნდა იყოს ზუსტად 11 ციფრი';
+  String get idInvalid => 'პირადი ნომერი უნდა შეიცავდეს ზუსტად 11 ციფრს';
 
   @override
-  String get emailRequired => 'ელფოსტის შეყვანა სავალდებულოა.';
+  String get emailRequired => 'ელ-ფოსტა საჭიროა.';
 
   @override
-  String get invalidEmail => 'გთხოვთ, შეიყვანეთ სწორი ელფოსტის მისამართი.';
+  String get invalidEmail => 'გთხოვთ შეიყვანოთ სწორი ელ-ფოსტის მისამართი.';
 
   @override
-  String get passwordRequired => 'პაროლის შეყვანა სავალდებულოა.';
+  String get passwordRequired => 'პაროლი საჭიროა.';
 
   @override
   String get passwordTooShort => 'პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს.';
 
   @override
-  String get nameRequired => 'სახელის მითითება სავალდებულოა.';
+  String get nameRequired => 'სახელი საჭიროა.';
 
   @override
   String get nameTooShort => 'სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.';
 
   @override
-  String get surnameRequired => 'გვარის მითითება სავალდებულოა.';
+  String get surnameRequired => 'გვარი საჭიროა.';
 
   @override
   String get surnameTooShort => 'გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს.';
 
   @override
-  String get registrationSuccess => 'თქვენ წარმატებით გაიარეთ რეგისტრაცია';
+  String get registrationSuccess => 'რეგისტრაცია წარმატებულია!';
 
   @override
   String get userNotFound => 'მომხმარებელი ვერ მოიძებნა';
@@ -205,7 +205,7 @@ class AppLocalizationsKa extends AppLocalizations {
   String get incorrectPassword => 'არასწორი პაროლი';
 
   @override
-  String get offers => 'შემოთავაზებები';
+  String get offers => 'შეთავაზებები';
 
   @override
   String get account => 'ანგარიში';
@@ -214,7 +214,7 @@ class AppLocalizationsKa extends AppLocalizations {
   String get orders => 'შეკვეთები';
 
   @override
-  String get home => 'სახლი';
+  String get home => 'მთავარი';
 
   @override
   String get signUpWithEmail => 'ელ-ფოსტით';
@@ -236,4 +236,10 @@ class AppLocalizationsKa extends AppLocalizations {
 
   @override
   String get wishlists => 'სურვილების სია';
+
+  @override
+  String get emailAlreadyExists => 'ელ-ფოსტა უკვე არსებობს';
+
+  @override
+  String get phoneNumberAlreadyExists => 'ტელეფონის ნომერი უკვე არსებობს';
 }
